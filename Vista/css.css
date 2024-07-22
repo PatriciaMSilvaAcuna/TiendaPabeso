@@ -33,3 +33,27 @@ footer {
 body {
     background-color: #f8f9fa; /* Color de fondo suave */
 }
+.custom-checkbox .form-check-input {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 0.25em;
+    border: 2px solid #28a745; /* color de borde */
+}
+
+.custom-checkbox .form-check-input:checked {
+    background-color: #28a745; /* color de fondo cuando está marcado */
+    border-color: #28a745; /* color de borde cuando está marcado */
+}
+
+.custom-checkbox .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25); /* sombra del foco */
+}
+/* Color del check */
+.custom-checkbox .form-check-input:checked::before {
+    content: '✔'; /* Marca de verificación */
+    display: block;
+    color: white; /* Color del check */
+    font-size: 1.25em; /* Tamaño del check */
+    line-height: 0.85; /* Alineación vertical del check */
+    text-align: center; /* Alineación horizontal del check */
+}
