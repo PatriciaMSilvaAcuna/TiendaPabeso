@@ -24,3 +24,12 @@ footer {
     bottom: 0;
     width: 100%;
 }
+.btn-estilo {
+      font-size: 1.25rem; /* Tamaño del texto del botón */
+      padding: 0.75rem 1.5rem; /* Tamaño del padding del botón */
+      border-radius: 0.5rem; /* Radio de borde del botón */
+      
+}
+body {
+    background-color: #f8f9fa; /* Color de fondo suave */
+}
