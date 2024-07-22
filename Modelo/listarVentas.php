@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ventas del Dia</title>
-  <link rel="stylesheet" type="text/css" href="./css.css">
+  <link rel="stylesheet" type="text/css" href="..Vista/css.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   
-
 </head>
+<header class="text-center bg-dark text-danger py-3">
+        <h4 id="Bienvenida"> PaBeSo Tienda</h4>
+</header>
 <body class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
 
 <div class="container">
@@ -40,7 +42,7 @@ echo "</tr>";
 while ($reg=mysqli_fetch_array($registros))
 {
   echo "<tr>";
-  echo "<td>" . $reg['id_Ventas'] . "</td>";
+  echo "<td>" . $reg['id_ventas'] . "</td>";
   echo "<td>" . $reg['id_Empleado'] . "</td>";
   echo "<td>" . $reg['fecha_Venta'] . "</td>";
   echo "<td>" . $reg['id_Medio_de_pago'] . "</td>";
