@@ -1,0 +1,26 @@
+.my-custom-class {
+    display: block;
+}
+.mi-boton{
+    width: 50%; /* Ajusta el ancho al 100% */
+    margin-bottom: 10px; /* Espacio entre los botones */
+
+
+
+}     
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Mantine el contenido centrado pero asegura que el pie de página no se superponga */
+.card {
+    margin-bottom: 60px; /* espacio suficiente para el pie de página */
+}
+
+/* Asegura que el pie de página esté fijo en la parte inferior */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

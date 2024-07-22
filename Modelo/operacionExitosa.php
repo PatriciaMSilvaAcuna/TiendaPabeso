@@ -1,0 +1,1 @@
+echo '<div class="container-fluid alert alert-success" role="alert">Venta Registrada correctamente.</div>';
