@@ -1,104 +1,93 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<title>Agregar Stock</title>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Agregar Stock</title>
+    <link rel="icon" href="../Vista/vendedora.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../Vista/css.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
-<body>
-
-<header class="text-center bg-dark text-danger py-3">
-        <h4 id="Bienvenida"> PaBeSo Tienda</h4>
-</header>
- <div class="container py-5">
-<div class="d-flex justify-content-center align-items-center" >
-<div class="text-center">   
-<h2>Formulario de Prenda</h2>
-
-  <form action="altas02.php" method="post">
-             <br>
-            <!-Creamos un select con conexión a la BD para cargar los TIPOS de prendas->
-
-        
-                <label>TIPO DE PRENDA</label>
-            <select id="id_Tipo_de_prenda" name="id_Tipo_de_prenda">
-            <?php
-                $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
-
-                    $registros = mysqli_query($conexion, "select id_Tipo_de_prenda, nombre from tipodeprenda") or die ("Problemas con el select: " . mysqli_error($conexion));
-                    //asignamos al select un valor en cero antes de cargar el while.
-                    echo "<option value=0>Seleccione un Tipo de prenda</options>";
-
-                    while ($reg = mysqli_fetch_array($registros)) {
-
-                        echo "<option value=\"$reg[id_Tipo_de_prenda]\">$reg[nombre]</options>";
-                    } 
-            ?>
-                
-            
-            </select>
-<br><br><br>
-            <label>SELECCIONE COLOR DE LA PRENDA</label>
-            <select id="id_color" name="id_color">
-            <?php
-                $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
-
-                    $registros = mysqli_query($conexion, "select id_Color, nombre from color") or die ("Problemas con el select: " . mysqli_error($conexion));
-                    //asignamos al select un valor en cero antes de cargar el while.
-                    echo "<option value=0>Seleccione un color</options>";
-
-                    while ($reg = mysqli_fetch_array($registros)) {
-
-                        echo "<option value=\"$reg[id_Color]\">$reg[nombre]</options>";
-                    } 
-            ?>
-<br><br><br>
-            </select>
-<br><br><br>
-
-            <label>SELECCIONE TALLE DE LA PRENDA</label>
-            <select id="id_talle" name="id_talle">
-            <?php
-                $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
-
-                    $registros = mysqli_query($conexion, "select id_Talle, nombre from talle") or die ("Problemas con el select: " . mysqli_error($conexion));
-                    //asignamos al select un valor en cero antes de cargar el while.
-                    echo "<option value=0>Seleccione un Talle</options>";
-
-                    while ($reg = mysqli_fetch_array($registros)) {
-
-                        echo "<option value=\"$reg[id_Talle]\">$reg[nombre]</options>";
-                    } 
-            ?>
-              <br>  
-            <br>
-            <br>
-            </select>
-<br><br><br>            
-                      <label>Descripcion:</label>
-                      <input type="text" id="descripcion" name="descripcion">
-
-<br><br><br>           
-<label>Stock Mínimo:</label>
-    <input type="text" name="stock_minimo" id="stock_minimo">
-<br><br><br>     
-                      <label>Cantidad:</label>
-                      <input type="text" name="stock" id="stock">
-            
-<br><br><br>            
-
-                      <label>Precio:</label>
-                      <input type="text" name="precio" id="precio">
-            
-<br><br><br>
-
-                      <input type="submit" class="btn btn-info btn-lg" value="Dar de Alta">
-
-
-
-    </form>
-        
+<body class="vh-100 d-flex flex-column">
+    <header class="text-center bg-dark text-danger py-3">
+        <h4 id="Bienvenida">PaBeSo Tienda</h4>
+    </header>
+    <div class="container flex-grow-1 d-flex justify-content-center align-items-center">
+        <div class="card w-75">
+            <div class="card-header bg-success text-white text-center">
+                <h4>Formulario de Prenda</h4>
+    </div>
+    <div class="card-body">
+                <form action="altas02.php" method="post">
+                    <div class="mb-3">
+                        <label for="id_Tipo_de_prenda" class="form-label">TIPO DE PRENDA</label>
+                        <select id="id_Tipo_de_prenda" name="id_Tipo_de_prenda" class="form-select">
+ <?php
+   $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
+   $registros = mysqli_query($conexion, "select id_Tipo_de_prenda, nombre from tipodeprenda") or die ("Problemas con el select: " . mysqli_error($conexion));
+        echo "<option value='0'>Seleccione un Tipo de prenda</option>";
+        while ($reg = mysqli_fetch_array($registros)) {
+        echo "<option value=\"$reg[id_Tipo_de_prenda]\">$reg[nombre]</option>";
+                }
+?>
+        </select>
+        </div>
+                    <div class="mb-3">
+                        <label for="id_color" class="form-label">SELECCIONE COLOR DE LA PRENDA</label>
+                        <select id="id_color" name="id_color" class="form-select">
+                            <?php
+                            $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
+                            $registros = mysqli_query($conexion, "select id_Color, nombre from color") or die ("Problemas con el select: " . mysqli_error($conexion));
+                            echo "<option value='0'>Seleccione un color</option>";
+                            while ($reg = mysqli_fetch_array($registros)) {
+                                echo "<option value=\"$reg[id_Color]\">$reg[nombre]</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_talle" class="form-label">SELECCIONE TALLE DE LA PRENDA</label>
+                        <select id="id_talle" name="id_talle" class="form-select">
+                            <?php
+                            $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
+                            $registros = mysqli_query($conexion, "select id_Talle, nombre from talle") or die ("Problemas con el select: " . mysqli_error($conexion));
+                            echo "<option value='0'>Seleccione un Talle</option>";
+                            while ($reg = mysqli_fetch_array($registros)) {
+                                echo "<option value=\"$reg[id_Talle]\">$reg[nombre]</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripcion:</label>
+                        <input type="text" id="descripcion" name="descripcion" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="stock_minimo" class="form-label">Stock Mínimo:</label>
+                        <input type="text" id="stock_minimo" name="stock_minimo" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="stock" class="form-label">Cantidad:</label>
+                        <input type="text" id="stock" name="stock" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="precio" class="form-label">Precio:</label>
+                        <input type="text" id="precio" name="precio" class="form-control">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="../Modelo/accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg mi-boton">Volver</a>
+                        <input type="submit" class="btn btn-success btn-lg mi-boton" value="Dar de Alta">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="text-center bg-dark text-white py-3 mt-auto">
+        <p>© 2023 PaBeSo Tienda. Todos los derechos reservados.</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 <!-Creamos el script donde trabajaremos con AJAX->
 <script type="text/javascript">
     //esta función inicia atomaticamente al cargarse la página.
@@ -133,16 +122,3 @@
 </script>
 
  
-<br><br><br>
-<a href="../Modelo/accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg ">Volver</a>
-    
-<br>
-<br>
-<br>
-</div>
-</div>
-<footer class="text-center bg-dark text-white py-3 mt-auto fixed-bottom">
-       <p> © 2023 PaBeSo Tienda. Todos los derechos reservados.</p>
-</footer>     
-</body>
-</html>
