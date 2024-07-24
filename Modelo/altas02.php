@@ -10,38 +10,41 @@
 
 <?php
     // Conexión a la base de datos
-    $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
+    $conexion = new mysqli("localhost", "root", "", "tiendapabeso");
 
-    // Recogida de datos del formulario
-    $prenda = $_POST['prenda'];
-    $color = $_POST['id_color'];
-    $talle = $_POST['id_talle'];
-    $descripcion = $_POST['descripcion'];
-    $stock = $_POST['stock'];
-    $precio = $_POST['precio'];
-
-    // Inserción de los datos en la tabla de prendas
-    $insertar = "INSERT INTO prendas (id_Tipo_de_prenda, id_Color, id_Talle, descripcion, stock, precio) VALUES ('$prenda', '$color', '$talle', '$descripcion', '$stock', '$precio')";
-
-    // Ejecución de la consulta
-    $resultado = mysqli_query($conexion, $insertar) or die ("Problemas con el insert: " . mysqli_error($conexion));
-
-    // Comprobación de la inserción
-    if($resultado){
-        
-        echo '<div class="alert alert-success" role="alert">La prenda ha sido añadida correctamente.</div>';
-        echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg ">Volver</a>';
-
-    } else {
-
-        echo '<div class="alert alert-danger" role="alert">Ha habido un problema al añadir la prenda.</div>';
-    echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg ">Volver</a>';
-
+    if ($conexion->connect_error) {
+        die("Problemas con la conexión: " . $conexion->connect_error);
     }
 
+    // Recogida de datos del formulario
+    $descripcion = $_POST['descripcion'];
+    $tipo_de_prenda = $_POST['id_Tipo_de_prenda'];
+    $color = $_POST['id_color'];
+    $talle = $_POST['id_talle'];
+    $stock = $_POST['stock'];
+    $stock_minimo = $_POST['stock_minimo'];
+    $precio = $_POST['precio'];
+
+    // Llamada al procedimiento almacenado
+    $query = "CALL InsertarPrendaConPrecio(?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conexion->prepare($query);
+    $stmt->bind_param("siisiid", $descripcion, $tipo_de_prenda, $color, $talle, $stock, $stock_minimo, $precio);
+    $stmt->execute();
+
+    // Comprobación de la inserción
+    if($stmt->affected_rows > 0){
+        echo '<div class="alert alert-success" role="alert">La prenda ha sido añadida correctamente.</div>';
+    } else {
+        echo '<div class="alert alert-danger" role="alert">Ha habido un problema al añadir la prenda.</div>';
+    }
+    
+    echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg">Volver</a>';
+
     // Cierre de la conexión
-    mysqli_close($conexion);
+    $stmt->close();
+    $conexion->close();
 ?>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>  
 

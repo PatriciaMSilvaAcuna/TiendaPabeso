@@ -20,7 +20,7 @@
 
         
                 <label>TIPO DE PRENDA</label>
-            <select id="prenda" name="prenda">
+            <select id="id_Tipo_de_prenda" name="id_Tipo_de_prenda">
             <?php
                 $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
 
@@ -77,7 +77,10 @@
                       <label>Descripcion:</label>
                       <input type="text" id="descripcion" name="descripcion">
 
-<br><br><br>            
+<br><br><br>           
+<label>Stock Mínimo:</label>
+    <input type="text" name="stock_minimo" id="stock_minimo">
+<br><br><br>     
                       <label>Cantidad:</label>
                       <input type="text" name="stock" id="stock">
             
