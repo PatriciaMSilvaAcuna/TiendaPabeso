@@ -1,7 +1,7 @@
 // Función para obtener el monto final actual mediante JavaScript
 function obtenerMontoFinalActual() {
     $.ajax({
-        url: 'cajaCierre.php', // Archivo PHP que devuelve el monto final actual
+        url: '../Modelo/cajaCierre.php', // Archivo PHP que devuelve el monto final actual
         method: 'GET',
         success: function(response) {
             // Actualizar el valor en el campo de texto

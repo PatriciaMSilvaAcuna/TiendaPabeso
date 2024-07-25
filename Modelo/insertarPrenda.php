@@ -3,15 +3,12 @@
 <head>
 <title>Agregar Stock</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-<!-Crean un pequeño script para cargar el CDN->
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
 
 </head>
 <body>
-
 <header class="text-center bg-dark text-danger py-3">
         <h4 id="Bienvenida"> PaBeSo Tienda</h4>
 </header>
@@ -20,28 +17,26 @@
  <form action="altas01.php" method="post">
              <br>
             <!-Creamos un select con conexión a la BD para cargar los TIPOS de prendas->
-
-        
-                <label>TIPO DE PRENDA</label>
+            <label>TIPO DE PRENDA</label>
             <select id="prenda" name="prenda">
-            <?php
-                $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
+<?php
+$conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die ("problemas con la conexion");
 
-                    $registros = mysqli_query($conexion, "select id_Tipo_de_prenda, nombre from tipodeprenda") or die ("Problemas con el select: " . mysqli_error($conexion));
-                    //asignamos al select un valor en cero antes de cargar el while.
-                    echo "<option value=0>Seleccione un Tipo de prenda</options>";
+$registros = mysqli_query($conexion, "select id_Tipo_de_prenda, nombre from tipodeprenda") or die ("Problemas con el select: " . mysqli_error($conexion));
+ //asignamos al select un valor en cero antes de cargar el while.
+      echo "<option value=0>Seleccione un Tipo de prenda</options>";
 
-                    while ($reg = mysqli_fetch_array($registros)) {
+      while ($reg = mysqli_fetch_array($registros)) {
 
-                        echo "<option value=\"$reg[id_Tipo_de_prenda]\">$reg[nombre]</options>";
+      echo "<option value=\"$reg[id_Tipo_de_prenda]\">$reg[nombre]</options>";
                     } 
-            ?>
+?>
                 
             
             </select>
             <br> 
             <br>
-            <!-Creamos el div que modificaremos para cargar el select de los ID de las prendas->
+<!-Creamos el div que modificaremos para cargar el select de los ID de las prendas->
             <div id="descripcion"></div>
         
 

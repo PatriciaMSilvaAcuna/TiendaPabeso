@@ -102,5 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </footer>
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@
                 <h4>Cierre de Caja</h4>
             </div>
   <div class="card-body">
-    <form id="formCerrarCaja" action="cerrarCaja.php" method="post">
+    <form id="formCerrarCaja" action="../Modelo/cerrarCaja.php" method="post">
             <div class="form-group">
                 <label>Monto Final Actual:</label>
                 <input type="text" id="montoFinalActual" name="montoFinalActual" class="form-control" readonly>
@@ -32,7 +32,7 @@
             </div>
             <br>
             
-        </form>
+      
           
       </div>
       <div class="card-footer d-flex justify-content-between">
@@ -40,15 +40,17 @@
         <a href="../Modelo/accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg mi-boton">Volver</a>
 
         <input type="submit" value="Cerrar Caja" class="btn btn-success mi-boton">
+     </form>
     </div>
 </div>
 </div>
+<div id="mensaje">
 </div>
     <br>
     <footer class="text-center bg-dark text-white py-3">
         <p>© 2023 PaBeSo Tienda. Todos los derechos reservados.</p>
     </footer>   
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="../Controlador/cierreCaja.js"></script> 
