@@ -20,22 +20,30 @@ if (isset($_SESSION['id_Empleado'])) {
     echo '<div class="alert alert-danger" role="alert">id_Empleado no está establecido en la sesión.</div>';
     exit;
 }
-
+// Conectar a la base de datos
 $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die("Problemas con la conexión");
 
 // Obtener datos del formulario de pago
 $id_Medio_de_pago = isset($_POST['medio_de_pago']) ? $_POST['medio_de_pago'] : null;
-//$subtotal = isset($_POST['subtotal']) ? $_POST['precio'] : null;
-
+$subtotal = isset($_POST['precio']) ? (float)$_POST['precio'] : 0;
+//echo '<div class="alert alert-info" role="alert">Subtotal recibido: ' . $subtotal . '</div>';
+//var_dump($subtotal); // Verifica el valor recibido
 //if ($subtotal === null) {
   //  echo '<div class="alert alert-danger" role="alert">El subtotal no está definido.</div>';
-  //  exit;
+    //exit;
 //}
 
 // Preparar la consulta para insertar la venta
 $sql = "INSERT INTO ventas (id_Empleado, fecha_Venta, id_Medio_de_pago, total) VALUES (?, NOW(), ?, ?)";
 $stmt = mysqli_prepare($conexion, $sql);
+if ($stmt === false) {
+    echo '<div class="alert alert-danger" role="alert">Error al preparar la consulta de venta.</div>';
+    exit;
+}
+
 mysqli_stmt_bind_param($stmt, 'iid', $id_Empleado, $id_Medio_de_pago, $subtotal);
+
+
 
 // Ejecutar la consulta para insertar la venta
 if (mysqli_stmt_execute($stmt)) {

@@ -32,38 +32,35 @@
             $subtotal_prenda=0;
             $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die("Problemas con la conexión");
 
-// Si se han enviado prendas seleccionadas desde el formulario
-if (isset($_POST['prendas']) && !empty($_POST['prendas'])) {
-    foreach ($_POST['prendas'] as $id_Prenda) {
-        if (isset($_SESSION['prendas_seleccionadas'][$id_Prenda])) {
-            $prenda = $_SESSION['prendas_seleccionadas'][$id_Prenda];
-            $descripcion = $prenda['descripcion'];
-            $precio = $prenda['precio'];
-  // Capturar la cantidad de la prenda, por defecto 1 si no se especifica
-            $cantidad = isset($_POST['cantidad_' . $id_Prenda]) ? (int)$_POST['cantidad_' . $id_Prenda] : 1;
+            if (isset($_POST['prendas']) && !empty($_POST['prendas'])) {
+                foreach ($_POST['prendas'] as $id_Prenda) {
+                    if (isset($_SESSION['prendas_seleccionadas'][$id_Prenda])) {
+                        $prenda = $_SESSION['prendas_seleccionadas'][$id_Prenda];
+                        $descripcion = $prenda['descripcion'];
+                        $precio = $prenda['precio'];
+                        $cantidad = isset($_POST['cantidad_' . $id_Prenda]) ? (int)$_POST['cantidad_' . $id_Prenda] : 1;
+                        
+                        $_SESSION['prendas_seleccionadas'][$id_Prenda]['cantidad'] = $cantidad;
+                        
+                        $subtotal_prenda = $precio * $cantidad;
+                        $_SESSION['prendas_seleccionadas'][$id_Prenda]['subtotal'] = $subtotal_prenda;
+                        
+                        $subtotal += $subtotal_prenda;
+                    }
+                }
+            }
             
-            // Guardar la cantidad en la sesión
-            $_SESSION['prendas_seleccionadas'][$id_Prenda]['cantidad'] = $cantidad;
+            // Depurar subtotal
+          //  echo '<pre>';
+          //  var_dump($subtotal);
+           // echo '</pre>';
+            ?>
             
-            // Calcular el subtotal para esta prenda
-            $subtotal_prenda = $precio * $cantidad;
+            <label for="precio">Subtotal:</label><br>
+            <input type="text" id="precio" name="precio" value="<?php echo htmlspecialchars($subtotal); ?>" readonly class="form-control"><br><br>
             
-            // Guardar el subtotal en la sesión
-            $_SESSION['prendas_seleccionadas'][$id_Prenda]['subtotal'] = $subtotal_prenda;
-            
-            // Sumar el subtotal de esta prenda al subtotal general
-            $subtotal += $subtotal_prenda;
-        }
-    }
-}
-?>             
-
-<label for="precio">Subtotal:</label><br>
-<input type="text" id="precio" name="precio" value="<?php echo htmlspecialchars($subtotal); ?>" readonly class="form-control"><br><br>
-             
-<h3>Productos seleccionados:</h3>
-<?php
-$cantidad=1;
+            <h3>Productos seleccionados:</h3>
+            <?php
             if (isset($_POST['prendas']) && !empty($_POST['prendas'])) {
                 foreach ($_POST['prendas'] as $id_Prenda) {
                     if (isset($_SESSION['prendas_seleccionadas'][$id_Prenda])) {
@@ -85,14 +82,14 @@ $cantidad=1;
                         echo "</div>";
                         echo "<div class='col-sm'>";
                         echo "<p><strong>Precio:</strong> " . htmlspecialchars($precio) . "</p>";
-                    
                         echo "</div>";
                         echo "</div>";
                         echo "</div>";
+                    }
+            
+                }
             }
-        }
-    }
-?>
+            ?>
 
             <div class="card-footer">
                 <div class="d-flex justify-content-between">
@@ -105,7 +102,6 @@ $cantidad=1;
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>  
-
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
