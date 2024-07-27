@@ -17,7 +17,7 @@
             <img src="../Vista/vendedora.png" alt="Venta Exitosa" class="img-fluid mb-3" id="exito">
             <p class="alert alert-success">La venta se ha procesado correctamente.</p>
             <a href="venta.php" class="btn btn-primary btn-lg">Volver a la Página de Ventas</a>
-            <a href="index.php" class="btn btn-secondary btn-lg">Salir</a> <!-- Redirige a la página principal -->
+            <a href="../index.php" class="btn btn-secondary btn-lg">Salir</a> <!-- Redirige a la página principal -->
         </div>
     </div>
 
