@@ -58,3 +58,8 @@ body {
     text-align: center; /* Alineación horizontal del check */
 }
 
+#exito{
+     max-width: 30%;
+
+     height: 1.5;
+}
