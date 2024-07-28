@@ -37,9 +37,14 @@
     
 </div>
 <div class="card-footer ">
+<?php
+                if (isset($_SESSION['id_Tipo_de_usuario']) && $_SESSION['id_Tipo_de_usuario'] == 1) {
+                    echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg d-grid w-100">Volver</a>';
+                } else {
+                    echo '<a href="accesoAceptadoVendedor.php" class="btn btn-secondary btn-lg d-grid w-100">Volver</a>';
+                }
+                ?>
 
-<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg d-grid">Volver</a>
-</div>
 
 <footer class="text-center bg-dark text-white py-3 fixed-bottom">
        <p>© 2023 PaBeSo Tienda. Todos los derechos reservados.</p>

@@ -43,13 +43,13 @@
             window.location.href = "../Modelo/caja.php";
         }
         function venta() {
-            window.location.href = "http://localhost:8080/Tienda/Modelo/venta.php";
+            window.location.href = "http://localhost/Tienda/Modelo/venta.php";
         }
         function consultaPrecio() {
             window.location.href = "../Modelo/consultaPrecio.php";
         }
         function cerrarCaja() {
-            window.location.href = "../Modelo/cajaCierre.php";
+            window.location.href = "../Vista/cierreCaja.html";
         }
         function salir() {
             window.location.href = "../index.html";
