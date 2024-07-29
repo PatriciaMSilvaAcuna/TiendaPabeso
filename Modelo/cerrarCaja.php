@@ -57,7 +57,7 @@ if ($montoIngresado != $montoFinalActual && $confirmar === 0) {
     $update_query->bind_param("di", $difCaja, $id_caja_abierta);
 
     if ($update_query->execute()) {
-        echo json_encode(["success" => true, "message" => "Caja cerrada exitosamente. Número de caja: $id_caja_abierta. Importe de cierre: $montoIngresado."]);
+        echo json_encode(["success" => true, "message" => "Caja lpm cerrada exitosamente. Número de caja: $id_caja_abierta. Importe de cierre: $montoIngresado."]);
     } else {
         echo json_encode(["success" => false, "message" => "Error al cerrar la caja: " . $update_query->error]);
     }

@@ -44,7 +44,7 @@ function enviarFormulario(event) {
         success: function(response) {
             if (response.success) {
                 alert(response.message);
-                window.location.href = "accesoAceptadoAdmin.php";
+                window.location.href = "../Vista/cierreCaja.html";
             } else {
                 $('#mensaje').html(
                     `<div class="alert alert-warning" role="alert">
@@ -66,7 +66,7 @@ function enviarFormulario(event) {
                         success: function(response) {
                             if (response.success) {
                                 alert(response.message);
-                                window.location.href = "accesoAceptadoAdmin.php";
+                                window.location.href = "../Vista/cierreCaja.html";
                             } else {
                                 alert(response.message);
                             }
