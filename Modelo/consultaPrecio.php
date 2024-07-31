@@ -15,14 +15,14 @@
 
 	<div class="card w-25 h-75 m-auto">	
 		<div class="card-header bg-success text-white text-center">
-			 <h4> Consulta de Precio</h4>
+			<h4> Consulta de Precio</h4>
 	</div>
 	<div class="card-body">
             
         <form action="../Modelo/pagina3.php" method="post">
-        	<h5 class="card-title">Ingrese prenda a Consultar:</h5>
+        <h5 class="card-title">Ingrese prenda a Consultar:</h5>
         
-           <input type="text" name="descripcion" placeholder=" Ingrese Prenda" class="form-control border border-5">
+        <input type="text" name="descripcion" placeholder=" Ingrese Prenda" class="form-control border border-5">
     <br>
     <br>
     
@@ -38,6 +38,9 @@
 </div>
 <div class="card-footer ">
 <?php
+session_start();
+$conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die("Problemas con la conexión");
+
                 if (isset($_SESSION['id_Tipo_de_usuario']) && $_SESSION['id_Tipo_de_usuario'] == 1) {
                     echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg d-grid w-100">Volver</a>';
                 } else {
@@ -47,7 +50,7 @@
 
 
 <footer class="text-center bg-dark text-white py-3 fixed-bottom">
-       <p>© 2023 PaBeSo Tienda. Todos los derechos reservados.</p>
+    <p>© 2023 PaBeSo Tienda. Todos los derechos reservados.</p>
 </footer>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
