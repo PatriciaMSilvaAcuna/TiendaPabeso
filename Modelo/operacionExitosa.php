@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +18,20 @@
             <img src="../Vista/vendedora.png" alt="Venta Exitosa" class="img-fluid mb-3" id="exito">
             <p class="alert alert-success">La venta se ha procesado correctamente.</p>
             <a href="venta.php" class="btn btn-primary btn-lg">Volver a la Página de Ventas</a>
-            <a href="../index.html" class="btn btn-secondary btn-lg">Salir</a> <!-- Redirige a la página principal -->
-        </div>
+            <?php
+session_start();
+$conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die("Problemas con la conexión");
+
+                if (isset($_SESSION['id_Tipo_de_usuario']) && $_SESSION['id_Tipo_de_usuario'] == 1) {
+                    echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg">Volver al Menu principal</a>';
+                } else {
+                    echo '<a href="accesoAceptadoVendedor.php" class="btn btn-secondary btn-lg">Volver al menu principal</a>';
+                }
+                ?>
+        <br><br><br>
+    
+        
+     </div>
     </div>
 
     <footer class="text-center bg-dark text-white py-3 fixed-bottom">
