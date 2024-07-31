@@ -18,83 +18,82 @@
         <h4> Procesar Venta</h4>
     </div>
     <div class="card-body">
-        <form action='venta.php' method='post'>
-            <h5 class="card-title">Ingrese prenda: </h5>
-            <input type="text" name="descripcion" placeholder=" Ingrese Prenda" class="form-control border border-5" required>
-            <br><br>
-            <input type="submit" class="btn btn-outline-info btn-lg d-grid w-100" value="Buscar">
-        </form>
+    <form action='venta.php' method='post'>
+    <h5 class="card-title">Ingrese prenda: </h5>
+    <input type="text" name="descripcion" placeholder=" Ingrese Prenda" class="form-control border border-5" required>
+    <br><br>
+    <input type="submit" class="btn btn-outline-info btn-lg d-grid w-100" value="Buscar">
+</form>
 
-        <form action='procesarVenta.php' method='post'>
-            <?php 
-            session_start();
-            $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die("Problemas con la conexión");
+<form action='procesarVenta.php' method='post'>
+    <?php 
+    session_start();
+    $conexion = mysqli_connect("localhost", "root", "", "tiendapabeso") or die("Problemas con la conexión");
 
-            if (isset($_POST['descripcion'])) {
-                $descripcion = mysqli_real_escape_string($conexion, $_POST['descripcion']);
-                $registro = mysqli_query($conexion, "SELECT p.id_Prenda, p.stock as Cantidad, p.descripcion AS Descripcion, t.nombre AS Talle, c.nombre AS Color, i.precio AS Precio
-                FROM prendas AS p
-                JOIN tipodeprenda AS t ON p.id_Tipo_de_prenda = t.id_Tipo_de_prenda
-                JOIN color AS c ON p.id_Color = c.id_Color
-                JOIN precio AS i ON p.id_Precio = i.id_Precio
-                WHERE p.descripcion LIKE '%$descripcion%'
-                AND p.stock > 0")
-                or die("Problemas con la conexión".mysqli_error($conexion));
+    if (isset($_POST['descripcion'])) {
+        $descripcion = mysqli_real_escape_string($conexion, $_POST['descripcion']);
+        $registro = mysqli_query($conexion, "SELECT p.id_Prenda, p.stock as Cantidad, p.descripcion AS Descripcion, t.nombre AS Talle, c.nombre AS Color, i.precio AS Precio
+        FROM prendas AS p
+        JOIN tipodeprenda AS t ON p.id_Tipo_de_prenda = t.id_Tipo_de_prenda
+        JOIN color AS c ON p.id_Color = c.id_Color
+        JOIN precio AS i ON p.id_Precio = i.id_Precio
+        WHERE p.descripcion LIKE '%$descripcion%'
+        AND p.stock > 0")
+        or die("Problemas con la conexión".mysqli_error($conexion));
 
-                echo "<div class='text-center'>";
-                if (mysqli_num_rows($registro) > 0) {
-                    while ($reg = mysqli_fetch_array($registro)) {
-                        echo "<div class='container'>";
-                        echo "<div class='row border-bottom border-border-3'>";
-                        echo "<div class='col-sm'>";
-                        echo "<p><strong>Stock:</strong> ".$reg['Cantidad']."</p>";
-                        echo "</div>";
-                        echo "<div class='col-sm'>";
-                        echo "<p><strong>ID Prenda:</strong> ".$reg['id_Prenda']."</p>";
-                        echo "</div>";
-                        echo "<div class='col-sm'>";
-                        echo "<p><strong>Descripcion:</strong> ".$reg['Descripcion']."</p>";
-                        echo "</div>";
-                        echo "<div class='col-sm'>";
-                        echo "<p><strong>Precio:</strong> ".$reg['Precio']."</p>";
-                        echo "</div>";
-                        echo "<div class='col-sm'>";
-                        echo "<label>Cantidad:</label>";
-                        echo "<input type='number' name='cantidad[".$reg['id_Prenda']."]' min='1' max='".$reg['Cantidad']."' value='1' class='form-control'>";
-                        echo "<input type='checkbox' name='prendas[]' value='".$reg['id_Prenda']."'> Seleccionar<br>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "</div>";
+        echo "<div class='text-center'>";
+        if (mysqli_num_rows($registro) > 0) {
+            while ($reg = mysqli_fetch_array($registro)) {
+                echo "<div class='container'>";
+                echo "<div class='row border-bottom border-border-3'>";
+                echo "<div class='col-sm'>";
+                echo "<p><strong>Stock:</strong> ".$reg['Cantidad']."</p>";
+                echo "</div>";
+                echo "<div class='col-sm'>";
+                echo "<p><strong>ID Prenda:</strong> ".$reg['id_Prenda']."</p>";
+                echo "</div>";
+                echo "<div class='col-sm'>";
+                echo "<p><strong>Descripcion:</strong> ".$reg['Descripcion']."</p>";
+                echo "</div>";
+                echo "<div class='col-sm'>";
+                echo "<p><strong>Precio:</strong> ".$reg['Precio']."</p>";
+                echo "</div>";
+                echo "<div class='col-sm'>";
+                echo "<label>Cantidad:</label>";
+                echo "<input type='number' name='cantidad[".$reg['id_Prenda']."]' min='1' max='".$reg['Cantidad']."' value='1' class='form-control'>";
+                echo "<input type='checkbox' name='prendas[]' value='".$reg['id_Prenda']."'> Seleccionar<br>";
+                echo "</div>";
+                echo "</div>";
+                echo "</div>";
 
-                        // Guardar las prendas en la sesión solo como referencia
-                        $_SESSION['prendas_seleccionadas'][$reg['id_Prenda']] = array(
-                            'descripcion' => $reg['Descripcion'],
-                            'precio' => $reg['Precio'],
-                            'stock' => $reg['Cantidad']
-                        );
-                    }
-                } else {
-                    echo "<p style='color: red;'>Lo siento, no encuentro eso.</p>";
-                }
+                // Guardar las prendas en la sesión solo como referencia
+                $_SESSION['prendas_seleccionadas'][$reg['id_Prenda']] = array(
+                    'descripcion' => $reg['Descripcion'],
+                    'precio' => $reg['Precio'],
+                    'stock' => $reg['Cantidad']
+                );
             }
-            mysqli_close($conexion);
-            ?>
-
-            <br>
-            <input type="submit" class="btn btn-outline-primary btn-lg d-grid w-100" value="Agregar">
-            <br><br>
-            <div class="card-footer">
-                <?php
-                if (isset($_SESSION['id_Tipo_de_usuario']) && $_SESSION['id_Tipo_de_usuario'] == 1) {
-                    echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg d-grid w-100">Volver</a>';
-                } else {
-                    echo '<a href="accesoAceptadoVendedor.php" class="btn btn-secondary btn-lg d-grid w-100">Volver</a>';
-                }
-                ?>
-                <br><br><br>
-            </div>
-        </form>
+        } else {
+            echo "<p style='color: red;'>Lo siento, no encuentro eso.</p>";
+        }
+    }
+    mysqli_close($conexion);
+    ?>
+    <br>
+    <input type="submit" class="btn btn-outline-primary btn-lg d-grid w-100" value="Agregar">
+    <br><br>
+    <div class="card-footer">
+        <?php
+        if (isset($_SESSION['id_Tipo_de_usuario']) && $_SESSION['id_Tipo_de_usuario'] == 1) {
+            echo '<a href="accesoAceptadoAdmin.php" class="btn btn-secondary btn-lg d-grid w-100">Volver</a>';
+        } else {
+            echo '<a href="accesoAceptadoVendedor.php" class="btn btn-secondary btn-lg d-grid w-100">Volver</a>';
+        }
+        ?>
+        <br><br><br>
     </div>
+</form>
+</div>
 </div>
 <footer class="text-center bg-dark text-white py-3 fixed-bottom">
    <p>© 2023 PaBeSo Tienda. Todos los derechos reservados.</p>
