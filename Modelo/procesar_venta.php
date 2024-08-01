@@ -27,10 +27,29 @@ if ($stmt === false) {
 }
 
 mysqli_stmt_bind_param($stmt, 'iid', $id_Empleado, $id_Medio_de_pago, $subtotal);
-
+// Ejecutar la consulta para insertar la venta
 if (mysqli_stmt_execute($stmt)) {
+    // Obtener el id_Venta recién insertado 
     $id_Venta = mysqli_insert_id($conexion);
 
+    // Determinar la columna a actualizar en base al medio de pago
+    $columna = '';
+    switch ($id_Medio_de_pago) {
+        case 1: // Efectivo
+            $columna = 'monto_Final';
+            break;
+        case 2: // Débito
+            $columna = 'ventas_debito';
+            break;
+        case 3: // Crédito
+            $columna = 'ventas_credito';
+            break;
+        default:
+            echo '<div class="alert alert-danger" role="alert">Error: Medio de pago no válido.</div>';
+            exit;
+    }
+
+    // Obtener el id_Caja para la caja abierta del empleado
     $sql_id_caja = "SELECT id_Caja FROM caja WHERE id_Empleado = ? AND fecha_Cierre IS NULL";
     $stmt_id_caja = mysqli_prepare($conexion, $sql_id_caja);
     mysqli_stmt_bind_param($stmt_id_caja, 'i', $id_Empleado);
@@ -44,11 +63,13 @@ if (mysqli_stmt_execute($stmt)) {
         exit;
     }
 
-    $sql_caja = "UPDATE caja SET monto_Final = monto_Final + ? WHERE id_Caja = ?";
+    // Preparar la consulta SQL para actualizar la caja
+    $sql_caja = "UPDATE caja SET $columna = $columna + ? WHERE id_Caja = ?";
     $stmt_caja = mysqli_prepare($conexion, $sql_caja);
     if ($stmt_caja === false) {
         echo '<div class="alert alert-danger" role="alert">Error al preparar la consulta de actualización de caja: ' . mysqli_error($conexion) . '</div>';
     } else {
+        // Vincular los parámetros para la actualización de la caja
         mysqli_stmt_bind_param($stmt_caja, 'di', $subtotal, $id_Caja);
         if (mysqli_stmt_execute($stmt_caja)) {
             if (isset($_SESSION['prendas_seleccionadas']) && is_array($_SESSION['prendas_seleccionadas'])) {
@@ -73,6 +94,7 @@ if (mysqli_stmt_execute($stmt)) {
 
     echo '<div class="alert alert-success" role="alert">Venta procesada con éxito. ID de Venta: ' . htmlspecialchars($id_Venta) . '</div>';
     header("Location: operacionExitosa.php?id_Venta=" . $id_Venta . "&id_Empleado=" . $id_Empleado);
+    exit;
 
 } else {
     echo '<div class="alert alert-danger" role="alert">Error al insertar la venta: ' . mysqli_error($conexion) . '</div>';
