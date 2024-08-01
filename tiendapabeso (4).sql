@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-07-2024 a las 05:56:58
+-- Tiempo de generación: 01-08-2024 a las 16:45:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -20,34 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `tiendapabeso`
 --
-
-DELIMITER $$
---
--- Procedimientos
---
-CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertarPrendaConPrecio` (IN `p_descripcion` VARCHAR(255), IN `p_tipo_de_prenda` INT, IN `p_color` INT, IN `p_talle` INT, IN `p_stock` INT, IN `p_stock_minimo` INT, IN `p_precio` INT)   BEGIN
-    DECLARE new_id_prenda INT;
-    DECLARE new_id_precio INT;
-
-    -- Insertar la prenda
-    INSERT INTO prendas (descripcion, id_Tipo_de_prenda, id_Color, id_Talle, stock, stock_minimo)
-    VALUES (p_descripcion, p_tipo_de_prenda, p_color, p_talle, p_stock, p_stock_minimo);
-
-    -- Obtener el id de la prenda recién insertada
-    SET new_id_prenda = LAST_INSERT_ID();
-
-    -- Insertar el precio en la tabla Precio
-    INSERT INTO Precio (id_Prenda, precio, fecha_Inicio, fecha_Fin)
-    VALUES (new_id_prenda, p_precio, NOW(), NULL);
-
-    -- Obtener el id del precio recién insertado
-    SET new_id_precio = LAST_INSERT_ID();
-
-    -- Actualizar la prenda con el id_Precio
-    UPDATE prendas SET id_Precio = new_id_precio WHERE id_Prenda = new_id_prenda;
-END$$
-
-DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -81,7 +53,15 @@ INSERT INTO `caja` (`id_Caja`, `id_Empleado`, `monto_Inicio`, `ventas_debito`, `
 (7, 11, 1000, 0, 0, 22000, '2024-07-26 00:00:00', '2024-07-25 20:28:01', -1000),
 (8, 11, 500, 0, 0, 49000, '2024-07-26 00:00:00', '2024-07-26 10:46:55', 0),
 (9, 11, 300, 0, 0, 100000, '2024-07-26 00:00:00', '2024-07-26 22:30:51', -4000),
-(10, 11, 600, 0, 0, 20000, '2024-07-27 00:00:00', NULL, 0);
+(10, 11, 600, 0, 0, 40000, '2024-07-27 00:00:00', '2024-07-27 15:54:24', 0),
+(11, 12, 300, 6000, 0, 13000, '2024-07-27 00:00:00', '2024-07-27 15:54:24', 0),
+(12, 11, 500, 0, 0, 29000, '2024-07-28 00:00:00', '2024-07-28 18:16:43', 0),
+(13, 11, 300, 0, 0, 28000, '2024-07-28 00:00:00', '2024-07-28 18:52:20', -3300),
+(14, 11, 50, 8000, 6000, 20000, '2024-07-29 00:00:00', '2024-07-28 21:21:30', -50),
+(15, 11, 100, 0, 0, 10000, '2024-07-31 00:00:00', '2024-07-30 19:38:44', -1100),
+(16, 11, 1, 5000, 5000, 62000, '2024-08-01 00:00:00', '2024-07-31 22:44:54', -2001),
+(17, 11, 59, 9000, 7000, 10000, '2024-08-01 00:00:00', '2024-07-31 22:59:22', 0),
+(18, 12, 9, 0, 0, 5000, '2024-08-01 00:00:00', '2024-07-31 23:08:42', -9);
 
 -- --------------------------------------------------------
 
@@ -110,6 +90,24 @@ INSERT INTO `color` (`id_Color`, `nombre`) VALUES
 (9, 'natural'),
 (10, 'rojo'),
 (11, 'otro');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `consultascaja`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `consultascaja` (
+`Num_Caja` int(11)
+,`Empleado` varchar(100)
+,`Fecha_Apertura` datetime
+,`Monto_Apertura` double
+,`Ventas_Debito` int(11)
+,`Ventas_Credito` int(11)
+,`Monto_Cierre` double
+,`Fecha_Cierre` datetime
+,`Diferencia_Caja` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -209,7 +207,30 @@ INSERT INTO `detalleventa` (`id_Detalle_venta`, `id_Venta`, `id_Prenda`, `cantid
 (76, 167, 1, 1, 5000, 5000),
 (77, 168, 1, 1, 5000, 5000),
 (78, 169, 1, 1, 5000, 5000),
-(79, 170, 1, 1, 5000, 5000);
+(79, 170, 1, 1, 5000, 5000),
+(80, 171, 1, 1, 5000, 5000),
+(81, 172, 1, 1, 5000, 5000),
+(82, 173, 1, 1, 5000, 5000),
+(83, 174, 1, 1, 5000, 5000),
+(84, 175, 2, 1, 6000, 6000),
+(85, 176, 3, 1, 7000, 7000),
+(86, 177, 2, 1, 6000, 6000),
+(87, 182, 2, 1, 6000, 6000),
+(88, 183, 1, 1, 5000, 5000),
+(89, 184, 3, 1, 7000, 7000),
+(90, 185, 1, 1, 5000, 5000),
+(91, 186, 2, 1, 6000, 6000),
+(92, 187, 2, 1, 6000, 6000),
+(93, 188, 1, 1, 5000, 5000),
+(94, 189, 6, 1, 9000, 9000),
+(95, 190, 4, 1, 8000, 8000),
+(96, 191, 2, 1, 6000, 6000),
+(97, 192, 6, 1, 9000, 9000),
+(98, 193, 2, 1, 6000, 6000),
+(99, 194, 4, 1, 8000, 8000),
+(100, 195, 1, 1, 5000, 5000),
+(101, 196, 1, 1, 5000, 5000),
+(102, 197, 1, 1, 5000, 5000);
 
 -- --------------------------------------------------------
 
@@ -333,12 +354,12 @@ CREATE TABLE `prendas` (
 --
 
 INSERT INTO `prendas` (`id_Prenda`, `descripcion`, `id_Tipo_de_prenda`, `id_Color`, `id_Talle`, `stock`, `stock_minimo`, `id_Precio`) VALUES
-(1, 'remera', 1, 1, 1, 90, 10, 15),
-(2, 'pantalon corto', 2, 2, 1, 7, 0, 16),
-(3, 'pollera jean', 3, 1, 1, 12, 0, 17),
-(4, 'camisa', 4, 1, 1, 16, 0, 18),
-(5, 'joguins', 5, 4, 2, 12, 0, 19),
-(6, 'buzo capucha', 8, 3, 3, 7, 0, 20);
+(1, 'remera', 1, 1, 1, 69, 10, 15),
+(2, 'pantalon corto', 2, 2, 1, 51, 0, 16),
+(3, 'pollera jean', 3, 1, 1, 10, 0, 17),
+(4, 'camisa', 4, 1, 1, 15, 0, 18),
+(5, 'joguins', 5, 4, 2, 14, 0, 19),
+(6, 'buzo capucha', 8, 3, 3, 10, 0, 20);
 
 -- --------------------------------------------------------
 
@@ -384,9 +405,9 @@ INSERT INTO `tipodeprenda` (`id_Tipo_de_prenda`, `nombre`) VALUES
 (1, 'remera'),
 (2, 'pantalon corto'),
 (3, 'pollera'),
-(4, 'pantalon largo'),
-(5, 'camisa'),
-(6, 'joggins'),
+(4, 'camisa'),
+(5, 'joggins'),
+(6, 'calza'),
 (7, 'jeans'),
 (8, 'buzo'),
 (9, 'sweater'),
@@ -598,7 +619,62 @@ INSERT INTO `ventas` (`id_ventas`, `id_Empleado`, `fecha_Venta`, `id_Medio_de_pa
 (167, 11, '2024-07-27 00:44:20', 1, 5000),
 (168, 11, '2024-07-27 00:47:09', 1, 5000),
 (169, 11, '2024-07-27 00:53:15', 1, 5000),
-(170, 11, '2024-07-27 00:55:05', 1, 5000);
+(170, 11, '2024-07-27 00:55:05', 1, 5000),
+(171, 11, '2024-07-27 01:00:13', 1, 5000),
+(172, 11, '2024-07-27 01:06:33', 1, 5000),
+(173, 11, '2024-07-27 01:09:27', 1, 5000),
+(174, 11, '2024-07-27 14:55:29', 1, 5000),
+(175, 12, '2024-07-27 17:17:29', 2, 6000),
+(176, 12, '2024-07-27 17:26:43', 1, 7000),
+(177, 12, '2024-07-27 17:31:20', 1, 6000),
+(178, 11, '2024-07-27 18:23:15', 1, 6000),
+(179, 11, '2024-07-27 18:23:58', 1, 6000),
+(180, 11, '2024-07-27 18:24:44', 1, 5000),
+(181, 11, '2024-07-27 19:02:07', 1, 6000),
+(182, 11, '2024-07-28 11:04:45', 1, 6000),
+(183, 11, '2024-07-28 11:05:26', 1, 5000),
+(184, 11, '2024-07-28 17:59:24', 1, 7000),
+(185, 11, '2024-07-28 18:00:33', 1, 5000),
+(186, 11, '2024-07-28 18:15:10', 1, 6000),
+(187, 11, '2024-07-28 18:18:23', 1, 6000),
+(188, 11, '2024-07-28 18:18:34', 1, 5000),
+(189, 11, '2024-07-28 18:18:49', 1, 9000),
+(190, 11, '2024-07-28 18:19:02', 1, 8000),
+(191, 11, '2024-07-28 20:25:39', 1, 6000),
+(192, 11, '2024-07-28 20:25:58', 1, 9000),
+(193, 11, '2024-07-28 20:26:15', 3, 6000),
+(194, 11, '2024-07-28 20:26:37', 2, 8000),
+(195, 11, '2024-07-28 20:26:50', 1, 5000),
+(196, 11, '2024-07-30 19:37:08', 1, 5000),
+(197, 11, '2024-07-30 19:37:43', 1, 5000),
+(198, 11, '2024-07-30 19:42:16', 3, 5000),
+(199, 11, '2024-07-30 19:42:51', 2, 5000),
+(200, 11, '2024-07-31 20:01:22', 1, 5000),
+(201, 11, '2024-07-31 22:02:48', 2, 5000),
+(202, 11, '2024-07-31 22:03:11', 1, 18000),
+(203, 11, '2024-07-31 22:03:46', 3, 9000),
+(204, 11, '2024-07-31 22:04:35', 1, 5000),
+(205, 11, '2024-07-31 22:04:57', 2, 5000),
+(206, 11, '2024-07-31 22:05:22', 2, 5000),
+(207, 11, '2024-07-31 22:24:00', 3, 5000),
+(208, 11, '2024-07-31 22:39:19', 2, 5000),
+(209, 11, '2024-07-31 22:40:06', 3, 5000),
+(210, 11, '2024-07-31 22:43:45', 2, 5000),
+(211, 11, '2024-07-31 22:44:09', 3, 5000),
+(212, 11, '2024-07-31 22:50:17', 1, 10000),
+(213, 11, '2024-07-31 22:50:30', 2, 9000),
+(214, 11, '2024-07-31 22:50:58', 3, 7000),
+(215, 12, '2024-07-31 23:07:44', 1, 5000),
+(216, 12, '2024-07-31 23:08:20', 1, 5000);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `consultascaja`
+--
+DROP TABLE IF EXISTS `consultascaja`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `consultascaja`  AS SELECT `c`.`id_Caja` AS `Num_Caja`, `e`.`usuario` AS `Empleado`, `c`.`fecha_Apertura` AS `Fecha_Apertura`, `c`.`monto_Inicio` AS `Monto_Apertura`, `c`.`ventas_debito` AS `Ventas_Debito`, `c`.`ventas_credito` AS `Ventas_Credito`, `c`.`monto_Final` AS `Monto_Cierre`, `c`.`fecha_Cierre` AS `Fecha_Cierre`, `c`.`difCaja` AS `Diferencia_Caja` FROM (`caja` `c` join `empleado` `e` on(`c`.`id_Empleado` = `e`.`id_Empleado`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -694,7 +770,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
-  MODIFY `id_Caja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_Caja` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `color`
@@ -706,7 +782,7 @@ ALTER TABLE `color`
 -- AUTO_INCREMENT de la tabla `detalleventa`
 --
 ALTER TABLE `detalleventa`
-  MODIFY `id_Detalle_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id_Detalle_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
@@ -760,7 +836,7 @@ ALTER TABLE `tipodeusuario`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_ventas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+  MODIFY `id_ventas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=217;
 
 --
 -- Restricciones para tablas volcadas
