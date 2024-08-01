@@ -29,6 +29,10 @@
                 die("Problemas en el select: " . mysqli_error($conexion));
             $totalVentasDia = mysqli_fetch_assoc($totalVentas);
 
+            $ventasEfectivo = mysqli_query($conexion, "SELECT SUM(total) as totalEfectivo FROM ventas WHERE DATE(fecha_Venta) = '$fecha_actual' AND id_Medio_de_pago = 1") or
+                die("Problemas en el select: " . mysqli_error($conexion));
+            $totalVentasEfectivo = mysqli_fetch_assoc($ventasEfectivo);
+
             if (mysqli_num_rows($registros) > 0) {
                 echo "<h1 class='mb-4'>Listado de Ventas del Día</h1>";
                 echo "<table class='table table-striped table-bordered'>";
@@ -56,6 +60,7 @@
                 echo "</tbody>";
                 echo "</table>";
                 echo "<h2 class='mt-4'>Total de Ventas del Día: <span class='text-primary'>" . $totalVentasDia['totalVentas'] . "</span></h2>";
+                echo "<h3 class='mt-2'>Total de Ventas en Efectivo: <span class='text-success'>" . $totalVentasEfectivo['totalEfectivo'] . "</span></h3>";
 
             } else {
                 echo "<p>Lo siento, no hay ventas disponibles para el día de hoy.</p>";
@@ -66,7 +71,7 @@
             <div class="text-center mt-4">
             <a href="../Modelo/accesoAceptadoAdmin.php" class="btn btn-success btn-lg btn-estilo">Volver</a>
             </div>
-           </div>   
+        </div>   
     </div>
 </div>
 <br><br>

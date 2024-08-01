@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Acceso Administrador</title>
+	<link rel="icon" href="../vista/vendedora.png" type="image/x-icon">
 	<link rel="stylesheet" type="text/css" href="../Vista/css.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
@@ -33,7 +34,7 @@
 <br>
 <br>
 <button class="btn btn-primary btn-lg" onclick="window.location.href='http://localhost/Tienda/Modelo/agregarPrendas.php'">Agregar Prendas</button>
-<button class="btn btn-info btn-lg" onclick="window.location.href='http://localhost/Tienda/Modelo/consultaStock.php'">Consulta Stock</button>
+<button class="btn btn-info btn-lg" onclick="consultasCajas()">Consultas Cajas</button>
 
 <br>
 
@@ -64,7 +65,9 @@ function salir() {
 	window.location.href = "../index.html";
 
 }
-
+function consultasCajas() {
+	window.location.href ="../Modelo/consultasCaja.php";
+}
 
 function AdministracionEmpleados() {
   window.location.href ="../Vista/AdministracionEmpleados.html";
